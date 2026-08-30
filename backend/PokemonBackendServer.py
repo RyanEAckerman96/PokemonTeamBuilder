@@ -18,8 +18,6 @@ import json
 
 import copy
 
-import ssl
-
 #####################
 # GLOBALS
 #####################
@@ -135,7 +133,7 @@ class PokemonScraper:
                         print("[UPDATED POKEMON]")
                         pokemon_db[pokemon_id] = dt
                     else:
-                        print("[EXISTING POKEMON ALREADY IN DB] : " + str(pokemon_id))
+                        #print("[EXISTING POKEMON ALREADY IN DB] : " + str(pokemon_id))
                         pass
                 else:
                     print("[NEW POKEMON] : " + str(pokemon_id))
@@ -279,13 +277,18 @@ class APIServer:
                                         failed = False
                                         for val in msg["pokemon"]:
                                             if val in pokemon_db:
-                                                team[val] = copy.deepcopy(pokemon_db[val])
+                                                if(val not in team):
+                                                    team[val] = copy.deepcopy(pokemon_db[val])
+                                                else:
+                                                    ws.send('{"status":404, "responding":"save_team", "info":{"text":"No Duplicate Pokemon"}}')
+                                                    failed = True
+                                                    break
                                             else:
                                                 ws.send('{"status":404, "responding":"save_team", "info":{"text":"Unknown Pokemon"}}')
                                                 failed = True
                                                 break
-                                            if(failed):
-                                                break
+
+                                        if(not failed):
                                             self.user_db[user].teams[msg["name"]] = team
                                             ws.send('{"status":200, "responding":"save_team", "info":{"text":"success"}}')
                                         
@@ -407,13 +410,8 @@ class APIServer:
         print("[LOADED] " + str(len(self.user_db)) + " users") 
         for val in self.user_db:
             print(self.user_db[val])
-
-        certfile="./server.crt"
-        keyfile="./server.key"
-
-        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        ssl_context.load_cert_chain(certfile=certfile, keyfile=keyfile)
-        self.server = serve(self.client_handler, "192.168.99.81", 8765, ssl=ssl_context)
+        
+        self.server = serve(self.client_handler, "192.168.99.81", 8765)
 
     def shutdown(self):
         self.stop = True
