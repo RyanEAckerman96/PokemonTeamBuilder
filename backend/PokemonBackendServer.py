@@ -18,6 +18,8 @@ import json
 
 import copy
 
+import ssl
+
 #####################
 # GLOBALS
 #####################
@@ -133,10 +135,10 @@ class PokemonScraper:
                         print("[UPDATED POKEMON]")
                         pokemon_db[pokemon_id] = dt
                     else:
-                        #print("[EXISTING POKEMON ALREADY IN DB]")
+                        print("[EXISTING POKEMON ALREADY IN DB] : " + str(pokemon_id))
                         pass
                 else:
-                    print("[NEW POKEMON]")
+                    print("[NEW POKEMON] : " + str(pokemon_id))
                     pokemon_db[pokemon_id] = dt
                 #print(dt)
                              
@@ -389,7 +391,7 @@ class APIServer:
             print(f"[SERVER] Connection closed {remote_addr}")
 
     def start(self):
-        print("[SERVER] Starting WebSocket server on ws://localhost:8765...")
+        print("[SERVER] Starting WebSocket server on ws://192.168.99.81:8765...")
         self.server.serve_forever()
 
     def __init__(self, user_db):
@@ -405,8 +407,13 @@ class APIServer:
         print("[LOADED] " + str(len(self.user_db)) + " users") 
         for val in self.user_db:
             print(self.user_db[val])
-        
-        self.server = serve(self.client_handler, "localhost", 8765)
+
+        certfile="./server.crt"
+        keyfile="./server.key"
+
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        ssl_context.load_cert_chain(certfile=certfile, keyfile=keyfile)
+        self.server = serve(self.client_handler, "192.168.99.81", 8765, ssl=ssl_context)
 
     def shutdown(self):
         self.stop = True
