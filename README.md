@@ -88,6 +88,8 @@ Server -> Client Communications
       "responding":""
       "info":{}
     }
+
+
     
    "status": 200 indicate a success
    "status": 404 indicates an error
@@ -102,12 +104,17 @@ Server -> Client Communications
 
 
 
+
+
 Requests
+
   "register"
 
     Registers user
     if Passwords to not match or User already exists Server sends 404
     otherwise sends 200
+
+
 
   "logon"
 
@@ -116,12 +123,16 @@ Requests
     otherwise sends 200
 
 
+
+
   "get_pokemon"
     
     given an ID & the position the pokemon will be in the team
     returns 200 with info that contains the position and the PokemonData
 
     If ID does not matchup to a known pokemon return 404
+
+
 
   "load_teams"
     
@@ -137,10 +148,44 @@ Requests
 
     For both if the user does not exists or the logged in user for the WS connection is not the user it will send a 404
 
-    "save_team"
-      
 
-    
+   "save_team"
+
+      given a user, name, and list of pokemon ids
+        gather each PokemonData for the ids and save it mapped to the name under the user inhe user_db and sends a 200 
+
+        If there are duplicate pokemon or a pokemon is unkown, or the user does not exists or the user is not logged in server will send a 404
+
+        
+   "delete_team"
+   
+      given a user and name
+         will remove the team associated with name from the user_db and returns a 200
+
+         If that team does not exist or the user does not exists or the user is not logged in server will send a 404
+
+
+   "modify_pokemon"
+
+       This is a debug request, allows the "admin" user to specify a Pokémon ID and modify its, name, types, or sprite in the pokemonDB
+       Returns a 200 once done.
+       Returns 404 if not the admin
+
+       For test don't do Bulbasuar or any other early pokemon if you restart the server the "modified" data will be overwritten with the correct data.
+
+   "counter_team"
+   
+      given a user and a name, it will generate a counter team and send over the list of PokemonData of all of the counters
+
+      Right no the Algo is extremely simple, the weakness chart is hard coded in, and it will just go over the pokmeon_db calculate the total modifier of the attacking type to the defending type 
+      If its a 4x it will stop the search and choose that pokemon
+      otherwise it will keep the Pokémon with the highest attack modifier. 
+
+      Will return a 404 if the user does not exists, is not logged in or if the team does not exists.
+
+      Future Improvements
+          This basic weakness counter algo also does not take into account that Pokémon can use moves outside of their typing, no does it take into account stats like, HP, Def, Atk, SP.Def, SP,Atk, Speed, etc.
+          A more robust also with considerations of moves and stats would better
 
 
         
