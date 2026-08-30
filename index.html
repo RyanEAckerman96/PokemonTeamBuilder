@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Team Builder</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    
+	<div id="login" class="wrapper">
+		<form action="">
+			<h1>Login</h1>
+			<div class="input-box">
+				<input id="user_logon" type="text" placeholder="Username" required>
+			</div>
+			<div class="input-box">
+				<input id="pw_logon" type="password" placeholder="Password" required>
+			</div>
+			<button type="button" class="btn" onclick="logon()">Login</button>
+			
+			<div class = "register-link">
+				<p>Don't have an account? <a href="javascript:void(0)" onclick="switchToRegister()" >Register</a></p>
+			</div>
+			
+
+	
+		</form>
+	</div>
+	
+	
+	<div id="register" class="wrapper" hidden>
+		<form action="">
+			<h1>Register</h1>
+			<div class="input-box">
+				<input id="user_register" type="text" placeholder="Username" required>
+			</div>
+			<div class="input-box">
+				<input id="pw1" type="password" placeholder="Password" required>
+			</div>
+			<div class="input-box">
+				<input id="pw2" type="password" placeholder="Confirm Password" required>
+			</div>
+			
+			<button type="button" class="btn" onclick="register()">Register</button>
+	
+		</form>
+	</div>
+	
+	<div id="changenotification" class="wrapper" hidden>
+		<form action="">
+			<h2>Change Notifications</h2>
+	
+			<label id="changes"><br>CHANGES</label>
+
+				
+
+		</form>
+	</div>
+	
+	<div id="builder" class="wrapper" hidden>
+		<form action="">
+			<h1>Builder - <a id="user_display"></a></h1>
+	
+			<label for="teams">New Team</label>
+			<select id="teams" onchange="onTeamSelectionChange()">
+				<option value="new">New</option>
+			</select>
+	
+			<div class="input-box">
+				<input id="team_name" type="text" placeholder="TEAM">
+			</div>
+			
+			<div class="grid_container">
+				<div id="pokemon1" class="pokemon-box">
+					<img class="img-pokemon" id="img1">
+						
+					</img>
+					<label for="pokemon1_id">ID: </label>
+					<div class="input-box-small">
+						<input id="pokemon1_id" type="text">
+					</div>
+					<label id="name1">Name: </label>
+					<br>
+					<label id="types1">Types: </label>
+					
+				</div>
+				
+				<div id="pokemon2" class="pokemon-box">
+					<img class="img-pokemon" id="img2">
+						
+					</img>
+					<label for="pokemon2_id">ID: </label>
+					<div class="input-box-small">
+						<input id="pokemon2_id" type="text">
+					</div>
+					<label id="name2">Name: </label>
+					<br>
+					<label id="types2">Types: </label>
+					
+				</div>
+				
+				<div id="pokemon3" class="pokemon-box">
+					<img class="img-pokemon" id="img3">
+						
+					</img>
+					<label for="pokemon3_id">ID: </label>
+					<div class="input-box-small">
+						<input id="pokemon3_id" type="text">
+					</div>
+					<label id="name3">Name: </label>
+					<br>
+					<label id="types3">Types: </label>
+					
+				</div>
+				
+				<div id="pokemon4" class="pokemon-box">
+					<img class="img-pokemon" id="img4">
+						
+					</img>
+					<label for="pokemon4_id">ID: </label>
+					<div class="input-box-small">
+						<input id="pokemon4_id" type="text">
+					</div>
+					<label id="name4">Name: </label>
+					<br>
+					<label id="types4">Types: </label>
+					
+				</div>
+				
+				<div id="pokemon5" class="pokemon-box">
+					<img class="img-pokemon" id="img5">
+						
+					</img>
+					<label for="pokemon5_id">ID: </label>
+					<div class="input-box-small">
+						<input id="pokemon5_id" type="text">
+					</div>
+					<label id="name5">Name: </label>
+					<br>
+					<label id="types5">Types: </label>
+					
+				</div>
+				
+				<div id="pokemon6" class="pokemon-box">
+					<img class="img-pokemon" id="img6">
+						
+					</img>
+					<label for="pokemon6_id">ID: </label>
+					<div class="input-box-small">
+						<input id="pokemon6_id" type="text">
+					</div>
+					<label id="name6">Name: </label>
+					<br>
+					<label id="types6">Types: </label>
+					
+				</div>
+				
+				<button type="button" class="btn" onclick="save_team()">Save</button>
+				<button type="button" class="btn" onclick="delete_team()">Delete</button>
+
+			</div>
+			<button type="button" class="btn" onclick="counter_team()">Make Counter</button>
+	
+		</form>
+	</div>
+	
+	<div id="counterteam" class="wrapper" hidden>
+		<form action="">
+			<h2>Counter Team</h2>
+	
+			<div class="grid_container">
+				<div id="ct_pokemon1" class="pokemon-box">
+					<img class="img-pokemon" id="ct_img1">
+						
+					</img>
+					<label id="ct_pokemon1_id">ID: </label>
+					<br>
+					<label id="ct_name1">Name: </label>
+					<br>
+					<label id="ct_types1">Types: </label>
+					
+				</div>
+				
+				<div id="ct_pokemon2" class="pokemon-box">
+					<img class="img-pokemon" id="ct_img2">
+						
+					</img>
+					<label id="ct_pokemon2_id">ID: </label>
+					<br>
+					<label id="ct_name2">Name: </label>
+					<br>
+					<label id="ct_types2">Types: </label>
+					
+				</div>
+				
+				<div id="ct_pokemon3" class="pokemon-box">
+					<img class="img-pokemon" id="ct_img3">
+						
+					</img>
+					<label id="ct_pokemon3_id">ID: </label>
+					<br>
+					<label id="ct_name3">Name: </label>
+					<br>
+					<label id="ct_types3">Types: </label>
+					
+				</div>
+				
+				<div id="ct_pokemon4" class="pokemon-box">
+					<img class="img-pokemon" id="ct_img4">
+						
+					</img>
+					<label id="ct_pokemon4_id">ID: </label>
+					<br>
+					<label id="ct_name4">Name: </label>
+					<br>
+					<label id="ct_types4">Types: </label>
+					
+				</div>
+				
+				<div id="ct_pokemon5" class="pokemon-box">
+					<img class="img-pokemon" id="ct_img5">
+						
+					</img>
+					<label id="ct_pokemon5_id">ID: </label>
+					<br>
+					<label id="ct_name5">Name: </label>
+					<br>
+					<label id="ct_types5">Types: </label>
+					
+				</div>
+				
+				<div id="ct_pokemon6" class="pokemon-box">
+					<img class="img-pokemon" id="ct_img6">
+						
+					</img>
+					<label id="ct_pokemon6_id">ID: </label>
+					<br>
+					<label id="ct_name6">Name: </label>
+					<br>
+					<label id="ct_types6">Types: </label>
+					
+				</div>
+				
+
+		</form>
+	</div>
+
+    <script>
+		const serverUrl = 'ws://127.0.0.1:8765';
+		const socket = new WebSocket(serverUrl);
+		user = ""
+		
+		socket.onopen = (event) => {
+			console.log('Connected to: ' + serverUrl);
+		}
+		
+		socket.onclose = (event) => {
+			console.log('Connection Closed');
+		}
+		
+		socket.onmessage = (event) => {	
+			try{
+				const data = JSON.parse(event.data)
+				if(data.status == 200)
+				{
+					if(data.responding == "register")
+					{
+						console.log("REGISTERED")
+						document.getElementById("login").hidden = false;
+						document.getElementById("register").hidden = true;					
+					}
+					else if(data.responding == "logon")
+					{
+						console.log("LOGGED IN")
+						document.getElementById("login").hidden = true;
+						document.getElementById("register").hidden = true;
+						document.getElementById("builder").hidden = false;
+						//document.getElementById("changenotification").hidden = false;
+						document.getElementById("user_display").textContent = user
+						//load teams
+						socket.send('{"action":"load_teams", "user":"'+ user + '"}')
+
+					}
+					else if(data.responding == "get_pokemon")
+					{
+						console.log("GET POKEMON")
+						on_get_pokemon(data)
+					}
+					else if(data.responding == "load_teams_names")
+					{
+						const team_select = document.getElementById("teams");
+						team_select.options.length = 0
+						
+						const emptyTeam = new Option("New", "New")
+						team_select.add(emptyTeam)
+						console.log(data)
+						for(team of data.info.teams)
+						{
+							const newTeam = new Option(team,team);
+							team_select.add(newTeam);
+						}
+					}
+					else if(data.responding == "load_teams")
+					{
+						document.getElementById("team_name").value = data.info.name
+						document.getElementById("changenotification").hidden = true
+						document.getElementById("changes").textContent = "Changes"
+						document.getElementById("counterteam").hidden = true
+						console.log(event.data)
+						cnt = 1
+						for(team of data.info.team)
+						{
+							pk_id = `pokemon${cnt}_id`;
+							img_id = `img${cnt}`;
+							types_id = `types${cnt}`;
+							name_id = `name${cnt}`;
+						
+							document.getElementById(pk_id).value = team.id
+							document.getElementById(img_id).src = team.sprite_url
+							document.getElementById(types_id).textContent = team.types
+							document.getElementById(name_id).textContent = team.name
+							
+							
+							for(db_team of data.info.db_team)
+							{
+								if (team.id == db_team.id)
+								{
+									all_types_match = team.types.every(item => db_team.types.includes(item));
+									names_match = team.name == db_team.name
+									sprite_match = team.sprite_url == db_team.sprite_url
+									
+									if(!names_match || !all_types_match || !sprite_match)
+									{
+										document.getElementById("changenotification").hidden = false
+										lbl = document.getElementById("changes")
+										lbl.textContent += "\n \n Pokemon ID : " + team.id
+										
+										if(!names_match)
+										{
+											lbl.textContent += "\n Name Changed : " + team.name + " -> " + db_team.name
+										}
+										
+										if(!all_types_match)
+										{
+											lbl.textContent += "\n Types Changed : " + team.types + " -> " + db_team.types
+										}
+										
+										if(!sprite_match)
+										{
+											lbl.textContent += "\n Sprite Changed : " + team.sprite_url + " -> " + db_team.sprite_url
+										}
+									}
+					
+									
+								}
+							}
+							
+							cnt++;
+						}
+						
+						while(cnt<=6)
+						{
+							pk_id = `pokemon${cnt}_id`;
+							img_id = `img${cnt}`;
+							types_id = `types${cnt}`;
+							name_id = `name${cnt}`;
+						
+							document.getElementById(pk_id).value = ""
+							document.getElementById(img_id).src =""
+							document.getElementById(types_id).textContent = "Types: "
+							document.getElementById(name_id).textContent = "Name: "	
+							cnt++
+						}
+							
+					}
+					else if(data.responding == "save_team")
+					{
+						document.getElementById("teams").value = "New"
+						onTeamSelectionChange()
+						document.getElementById("changenotification").hidden = true
+						socket.send('{"action":"load_teams", "user":"'+ user + '"}')
+					}
+					else if(data.responding == "delete_team")
+					{
+						document.getElementById("teams").value = "New"
+						onTeamSelectionChange()
+					
+						socket.send('{"action":"load_teams", "user":"'+ user + '"}')
+					}
+					else if(data.responding == "counter_team")
+					{
+						console.log(event.data)
+						//alert(event.data)
+						
+						document.getElementById("counterteam").hidden = false;
+						cnt = 1
+						for(team of data.info.team)
+						{
+							pk_id = `ct_pokemon${cnt}_id`;
+							img_id = `ct_img${cnt}`;
+							types_id = `ct_types${cnt}`;
+							name_id = `ct_name${cnt}`;
+							document.getElementById(pk_id).textContent = "ID: " + team.id
+							document.getElementById(img_id).src = team.sprite_url
+							document.getElementById(types_id).textContent = team.types
+							document.getElementById(name_id).textContent = team.name
+							
+							cnt++;
+						}
+						
+						while(cnt<=6)
+						{
+							pk_id = `ct_pokemon${cnt}_id`;
+							img_id = `ct_img${cnt}`;
+							types_id = `ct_types${cnt}`;
+							name_id = `ct_name${cnt}`;
+						
+							document.getElementById(pk_id).value = ""
+							document.getElementById(img_id).src =""
+							document.getElementById(types_id).textContent = "Types: "
+							document.getElementById(name_id).textContent = "Name: "	
+							cnt++
+						}
+					}
+				}else{
+					console.log(event.data)
+				}
+			}catch(error){
+				console.log(event.data)
+				console.log(error)
+			}
+		}
+	
+		function switchToRegister(){
+			document.getElementById("login").hidden = true;
+			document.getElementById("register").hidden = false;
+		}
+	
+		function logon(){
+			user = document.getElementById("user_logon").value
+			socket.send('{"action":"logon", "user":"'+ document.getElementById("user_logon").value + '", "pw":"'+ document.getElementById("pw_logon").value +'"}')
+		}
+		
+		function register(){
+			socket.send('{"action":"register", "user":"'+ document.getElementById("user_register").value + '", "pw1":"'+ document.getElementById("pw1").value + '", "pw2":"' + document.getElementById("pw2").value +'"}')
+		}
+		
+		function save_team(){
+			if(document.getElementById("team_name").value == ""){
+				alert("Team need name")
+			}
+			else
+			{
+			
+				pokemon_text = ""
+				if(document.getElementById("pokemon1_id").value !="")
+				{
+					pokemon_text += document.getElementById("pokemon1_id").value + ","
+				}
+				if(document.getElementById("pokemon2_id").value !="")
+				{
+					pokemon_text += document.getElementById("pokemon2_id").value + ","
+				}
+				if(document.getElementById("pokemon3_id").value !="")
+				{
+					pokemon_text += document.getElementById("pokemon3_id").value + ","
+				}
+				if(document.getElementById("pokemon4_id").value !="")
+				{
+					pokemon_text += document.getElementById("pokemon4_id").value + ","
+				}
+				if(document.getElementById("pokemon5_id").value !="")
+				{
+					pokemon_text += document.getElementById("pokemon5_id").value + ","
+				}
+				if(document.getElementById("pokemon6_id").value !="")
+				{
+					pokemon_text += document.getElementById("pokemon6_id").value + ","
+				}
+				pokemon_text = pokemon_text.slice(0,-1)
+				socket.send('{"action":"save_team", "user":"'+ user + '", "name":"'+ document.getElementById("team_name").value+'","pokemon":['+pokemon_text+']}')
+			}
+			
+			socket.send('{"action":"load_teams", "user":"'+ user + '"}')
+		}
+		
+		
+		const id_1 = document.getElementById('pokemon1_id');
+		id_1.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+		      if(id_1.value == "")
+			  {
+				document.getElementById("img1").src = ""
+				document.getElementById("types1").textContent = "Types:"
+				document.getElementById("name1").textContent = "Name:"				
+			  }
+			  else
+			  {
+				request(1,id_1.value);
+			  }
+			}
+		});
+
+		const id_2 = document.getElementById('pokemon2_id');
+		id_2.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+		      if(id_2.value == "")
+			  {
+				document.getElementById("img2").src = ""
+				document.getElementById("types2").textContent = "Types:"
+				document.getElementById("name2").textContent = "Name:"				
+			  }
+			  else
+			  {
+				request(2,id_2.value);
+			  }
+			}
+		});
+
+		const id_3 = document.getElementById('pokemon3_id');
+		id_3.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+		      if(id_3.value == "")
+			  {
+				document.getElementById("img3").src = ""
+				document.getElementById("types3").textContent = "Types:"
+				document.getElementById("name3").textContent = "Name:"				
+			  }
+			  else
+			  {
+				request(3,id_3.value);
+			  }
+			}
+		});
+
+		const id_4 = document.getElementById('pokemon4_id');
+		id_4.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+		      if(id_4.value == "")
+			  {
+				document.getElementById("img4").src = ""
+				document.getElementById("types4").textContent = "Types:"
+				document.getElementById("name4").textContent = "Name:"				
+			  }
+			  else
+			  {
+				request(4,id_4.value);
+			  }
+			}
+		});
+
+		const id_5 = document.getElementById('pokemon5_id');
+		id_5.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+		      if(id_5.value == "")
+			  {
+				document.getElementById("img5").src = ""
+				document.getElementById("types5").textContent = "Types:"
+				document.getElementById("name5").textContent = "Name:"				
+			  }
+			  else
+			  {
+				request(5,id_5.value);
+			  }
+			}
+		});
+
+		const id_6 = document.getElementById('pokemon6_id');
+		id_6.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter') {
+		      if(id_6.value == "")
+			  {
+				document.getElementById("img6").src = ""
+				document.getElementById("types6").textContent = "Types:"
+				document.getElementById("name6").textContent = "Name:"				
+			  }
+			  else
+			  {
+				request(6,id_6.value);
+			  }
+			}
+		});
+
+	  // Example custom function
+	  function request(pos, pokemon_id) {
+			socket.send('{"action":"get_pokemon", "id":'+ pokemon_id + ', "pos":'+ pos +'}')
+	  }
+	  
+	  function on_get_pokemon(data)
+	  {
+		info = data.info
+		if(info.pos==1)
+		{
+			document.getElementById("pokemon1_id").textContent = info.pokemon.id_num
+			document.getElementById("img1").src = info.pokemon.sprite_url
+			document.getElementById("types1").textContent = info.pokemon.types
+			document.getElementById("name1").textContent = info.pokemon.name
+			
+		}
+		else if(info.pos ==2)
+		{
+			document.getElementById("pokemon2_id").textContent = info.pokemon.id_num
+			document.getElementById("img2").src = info.pokemon.sprite_url
+			document.getElementById("types2").textContent = info.pokemon.types
+			document.getElementById("name2").textContent = info.pokemon.name 		
+		}
+		else if(info.pos ==3)
+		{
+			document.getElementById("pokemon3_id").textContent = info.pokemon.id_num
+			document.getElementById("img3").src = info.pokemon.sprite_url
+			document.getElementById("types3").textContent = info.pokemon.types
+			document.getElementById("name3").textContent = info.pokemon.name 	
+		}
+		else if(info.pos ==4)
+		{
+			document.getElementById("pokemon4_id").textContent = info.pokemon.id_num
+			document.getElementById("img4").src = info.pokemon.sprite_url
+			document.getElementById("types4").textContent = info.pokemon.types
+			document.getElementById("name4").textContent = info.pokemon.name 	
+		}
+		else if(info.pos ==5)
+		{
+			document.getElementById("pokemon5_id").textContent = info.pokemon.id_num
+			document.getElementById("img5").src = info.pokemon.sprite_url
+			document.getElementById("types5").textContent = info.pokemon.types
+			document.getElementById("name5").textContent = info.pokemon.name 	
+		}
+		else if(info.pos ==6)
+		{
+			document.getElementById("pokemon6_id").textContent = info.pokemon.id_num
+			document.getElementById("img6").src = info.pokemon.sprite_url
+			document.getElementById("types6").textContent = info.pokemon.types
+			document.getElementById("name6").textContent = info.pokemon.name	
+		}
+	  }
+		
+		function onTeamSelectionChange()
+		{
+			const team_select = document.getElementById("teams");
+			
+			if(team_select.value == "New")
+			{
+				document.getElementById("team_name").value = ""
+			
+				document.getElementById("pokemon1_id").value = ""
+				document.getElementById("img1").src = ""
+				document.getElementById("types1").textContent = "Types:"
+				document.getElementById("name1").textContent = "Name:"
+				
+				document.getElementById("pokemon2_id").value = ""
+				document.getElementById("img2").src = ""
+				document.getElementById("types2").textContent = "Types:"
+				document.getElementById("name2").textContent = "Name:"	
+
+				document.getElementById("pokemon3_id").value = ""
+				document.getElementById("img3").src = ""
+				document.getElementById("types3").textContent = "Types:"
+				document.getElementById("name3").textContent = "Name:"
+
+				document.getElementById("pokemon4_id").value = ""
+				document.getElementById("img4").src = ""
+				document.getElementById("types4").textContent = "Types:"
+				document.getElementById("name4").textContent = "Name:"	
+
+				document.getElementById("pokemon5_id").value = ""
+				document.getElementById("img5").src = ""
+				document.getElementById("types5").textContent = "Types:"
+				document.getElementById("name5").textContent = "Name:"
+
+				document.getElementById("pokemon6_id").value = ""
+				document.getElementById("img6").src = ""
+				document.getElementById("types6").textContent = "Types:"
+				document.getElementById("name6").textContent = "Name:"				
+			}
+			else
+			{
+				//load Team
+				socket.send('{"action":"load_teams", "user":"'+ user + '", "name":"'+ team_select.value +'"}')
+			}
+		}
+		function delete_team(){
+			const team_select = document.getElementById("teams");
+			
+			if(team_select.value != "New")
+			{
+				socket.send('{"action":"delete_team", "user":"'+ user + '", "name":"'+ team_select.value +'"}')
+			}
+		
+		}
+		
+		function counter_team(){
+			const team_select = document.getElementById("teams");
+			
+			if(team_select.value != "New")
+			{
+				socket.send('{"action":"counter_team", "user":"'+ user + '", "name":"'+ team_select.value +'"}')
+			}				
+		}
+    </script>
+</body>
+</html>
